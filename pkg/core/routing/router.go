@@ -28,22 +28,24 @@ func GetApiRouter() *ApiRouter {
 		apiRouterInstance = &ApiRouter{
 			routerEngine: chi.NewRouter(),
 		}
-		log.Println("Using default middlewares")
-		apiRouterInstance.routerEngine.Use(middleware.RequestID)
-		apiRouterInstance.routerEngine.Use(middleware.RealIP)
-		apiRouterInstance.routerEngine.Use(middleware.Logger)
+		log.Println("Adding recovery middleware")
 		apiRouterInstance.routerEngine.Use(middleware.Recoverer)
 	}
 	return apiRouterInstance
 }
 
-//func (this *ApiRouter) AddGlobalMiddleware(handler ApiHandler)
+func (this *ApiRouter) AddGlobalMiddleware(mWare Middleware) {
+	this.routerEngine.Use(mWare)
+}
 
 func (this *ApiRouter) AddHandler(handler ApiHandler) {
 	this.routerEngine.Route(handler.GetBasePath(), func(r chi.Router) {
 		log.Println("Registering handler for route: ", handler.GetBasePath())
+
 		if handler.GetMiddlewares() != nil && handler.GetMiddlewares().isNotEmpty() {
-			r.Use(handler.GetMiddlewares()...)
+			for _, mw := range handler.GetMiddlewares() {
+				r.Use(mw)
+			}
 		}
 
 		for _, route := range handler.GetRoutes() {

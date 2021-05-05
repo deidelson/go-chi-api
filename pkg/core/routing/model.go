@@ -8,7 +8,9 @@ type ApiRoute struct {
 	Handler http.HandlerFunc
 }
 
-type Middlewares []func(http.Handler) http.Handler
+type Middleware func(http.Handler) http.Handler
+
+type Middlewares []Middleware
 
 func (this Middlewares) isNotEmpty() bool {
 	return len(this) > 0
