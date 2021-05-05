@@ -21,6 +21,7 @@ func (handler *handler) getMovies(w http.ResponseWriter, r *http.Request) {
 }
 
 func (handler *handler) getById(w http.ResponseWriter, r *http.Request) {
+	//TODO move chi.URLParam to utility for technology abstraction
 	id, err := convertion.StringToInt(chi.URLParam(r, "id"))
 
 	if err != nil {
