@@ -24,7 +24,7 @@ func (this *handler) GetRoutes() []routing.ApiRoute {
 
 	}
 }
-func (this *handler) GetMiddlewares() []func(http.Handler) http.Handler {
+func (this *handler) GetMiddlewares() routing.Middlewares {
 	return nil
 }
 

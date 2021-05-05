@@ -24,10 +24,12 @@ type ApiRoute struct {
 	Handler http.HandlerFunc
 }
 
+type Middlewares []func(http.Handler) http.Handler
+
 type ApiHandler interface {
 	GetBasePath() string
 	GetRoutes() []ApiRoute
-	GetMiddlewares() []func(http.Handler) http.Handler
+	GetMiddlewares() Middlewares
 }
 
 type ApiRouter struct {
