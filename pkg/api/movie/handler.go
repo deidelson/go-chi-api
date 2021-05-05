@@ -68,7 +68,6 @@ func (this *handler) GetRoutes() []routing.ApiRoute {
 		{
 			Handler: this.getMovies,
 			Method:  routing.GET,
-
 			Endpoint: "/",
 		},
 		{

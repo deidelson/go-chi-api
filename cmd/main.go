@@ -11,6 +11,7 @@ func main() {
 
 	router := routing.GetApiRouter()
 
+	//TODO llevar middlewares al core
 	router.AddGlobalMiddleware(middleware.RequestID)
 	router.AddGlobalMiddleware(middleware.RealIP)
 	router.AddGlobalMiddleware(middleware.Logger)
