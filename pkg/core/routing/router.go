@@ -3,6 +3,7 @@ package routing
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"log"
 	"net/http"
 )
 
@@ -14,44 +15,34 @@ const (
 )
 
 var (
-	apiRouter *ApiRouter
+	apiRouterInstance *ApiRouter
 )
-
-type ApiRoute struct {
-	Endpoint string
-	Method   string
-	//TODO ver que conviene
-	Handler http.HandlerFunc
-}
-
-type Middlewares []func(http.Handler) http.Handler
-
-type ApiHandler interface {
-	GetBasePath() string
-	GetRoutes() []ApiRoute
-	GetMiddlewares() Middlewares
-}
 
 type ApiRouter struct {
 	routerEngine *chi.Mux
 }
 
 func GetApiRouter() *ApiRouter {
-	if apiRouter == nil {
-		apiRouter = &ApiRouter{
+	log.Println("Starting router")
+	if apiRouterInstance == nil {
+		apiRouterInstance = &ApiRouter{
 			routerEngine: chi.NewRouter(),
 		}
-		apiRouter.routerEngine.Use(middleware.RequestID)
-		apiRouter.routerEngine.Use(middleware.RealIP)
-		apiRouter.routerEngine.Use(middleware.Logger)
-		apiRouter.routerEngine.Use(middleware.Recoverer)
+		log.Println("Using default middlewares")
+		apiRouterInstance.routerEngine.Use(middleware.RequestID)
+		apiRouterInstance.routerEngine.Use(middleware.RealIP)
+		apiRouterInstance.routerEngine.Use(middleware.Logger)
+		apiRouterInstance.routerEngine.Use(middleware.Recoverer)
 	}
-	return apiRouter
+	return apiRouterInstance
 }
+
+//func (this *ApiRouter) AddGlobalMiddleware(handler ApiHandler)
 
 func (this *ApiRouter) AddHandler(handler ApiHandler) {
 	this.routerEngine.Route(handler.GetBasePath(), func(r chi.Router) {
-		if handler.GetMiddlewares() != nil {
+		log.Println("Registering handler for route: ", handler.GetBasePath())
+		if handler.GetMiddlewares() != nil && handler.GetMiddlewares().isNotEmpty() {
 			r.Use(handler.GetMiddlewares()...)
 		}
 
@@ -62,6 +53,7 @@ func (this *ApiRouter) AddHandler(handler ApiHandler) {
 }
 
 func (this *ApiRouter) Start() {
+	log.Println("Starting server")
 	err := http.ListenAndServe(":8080", this.routerEngine)
 	if err != nil {
 		panic(err)

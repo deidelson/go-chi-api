@@ -1,1 +1,1 @@
-go-chi-api
+Golang rest api using Chi
