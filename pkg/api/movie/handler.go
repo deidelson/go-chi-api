@@ -31,7 +31,7 @@ func (this *handler) getById(w http.ResponseWriter, r *http.Request) {
 	movie, err := this.movieService.getById(id)
 
 	if err != nil {
-		web.Confict(w, err.Error())
+		web.Conflict(w, err.Error())
 		return
 	}
 

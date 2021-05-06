@@ -12,7 +12,7 @@ type JwtProvider interface {
 }
 
 type JwtProviderImpl struct {
-	secret []byte
+	secret                 []byte
 	expirationTimeinMinuts int
 }
 
@@ -23,7 +23,7 @@ var (
 func GetJwtProviderInstance() JwtProvider {
 	if jwtProviderInstance == nil {
 		jwtProviderInstance = &JwtProviderImpl{
-			secret: []byte("secret-local"),
+			secret:                 []byte("secret-local"),
 			expirationTimeinMinuts: 60,
 		}
 	}

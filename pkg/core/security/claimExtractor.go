@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	ClaimsContextKey string = "claims"
+	ClaimsContextKey = "claims"
 )
 
 func GetCurrentUsername(ctx context.Context) (string, error) {

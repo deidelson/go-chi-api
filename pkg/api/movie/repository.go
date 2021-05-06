@@ -12,8 +12,8 @@ type repository interface {
 
 var (
 	repositoryInstance repository
-	unexistentMovie = errors.New("unexistent.movie")
-	existentMovie = errors.New("existent.movie")
+	unexistentMovie    = errors.New("unexistent.movie")
+	existentMovie      = errors.New("existent.movie")
 )
 
 type repositoryImpl struct {

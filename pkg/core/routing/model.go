@@ -1,11 +1,21 @@
 package routing
 
-import "net/http"
+import (
+	"github.com/go-chi/chi/v5"
+	"net/http"
+)
+
+type RouterEngine interface {
+	Use(middlewares ...func(http.Handler) http.Handler)
+	Method(method, pattern string, h http.Handler)
+	Route(pattern string, fn func(r chi.Router)) chi.Router
+	ServeHTTP(w http.ResponseWriter, r *http.Request)
+}
 
 type ApiRoute struct {
 	Endpoint string
 	Method   string
-	Handler http.HandlerFunc
+	Handler  http.HandlerFunc
 }
 
 type Middleware func(http.Handler) http.Handler

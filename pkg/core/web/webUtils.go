@@ -16,7 +16,7 @@ func ReadBody(body io.Reader, object interface{}) error {
 	return nil
 }
 
-func GetPathVariable( r *http.Request, key string) string {
+func GetPathVariable(r *http.Request, key string) string {
 	return chi.URLParam(r, key)
 }
 
@@ -28,7 +28,7 @@ func WriteSecurityError(w http.ResponseWriter, errorBody interface{}) {
 	writeResponseWithStatusCode(w, errorBody, 401)
 }
 
-func Confict(w http.ResponseWriter, errorBody interface{}) {
+func Conflict(w http.ResponseWriter, errorBody interface{}) {
 	writeResponseWithStatusCode(w, errorBody, 409)
 }
 

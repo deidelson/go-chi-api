@@ -34,6 +34,6 @@ func TimeToStringWithFormat(time time.Time, format string) string {
 	return time.Format(format)
 }
 
-func AddMinuts(date time.Time, minuts int) time.Time{
+func AddMinuts(date time.Time, minuts int) time.Time {
 	return date.Add(time.Duration(minuts) * time.Minute)
 }

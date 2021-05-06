@@ -14,7 +14,6 @@ type serviceImpl struct {
 	movieRepository repository
 }
 
-
 func (service *serviceImpl) save(movie *movie) error {
 	return service.movieRepository.save(movie)
 }

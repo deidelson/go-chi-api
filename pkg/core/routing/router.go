@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	GET = "GET"
-	POST = "POST"
-	PUT = "PUT"
+	GET    = "GET"
+	POST   = "POST"
+	PUT    = "PUT"
 	DELETE = "DELETE"
 )
 
@@ -19,7 +19,7 @@ var (
 )
 
 type ApiRouter struct {
-	routerEngine *chi.Mux
+	routerEngine RouterEngine
 }
 
 func GetApiRouter() *ApiRouter {

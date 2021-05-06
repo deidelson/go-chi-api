@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	ClaimsContextKey string = "claims"
+	ClaimsContextKey = "claims"
 )
 
 type SecurityError struct {
