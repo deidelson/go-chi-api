@@ -16,11 +16,11 @@ type handler struct {
 	movieService service
 }
 
-func (handler *handler) getMovies(w http.ResponseWriter, r *http.Request) {
-	web.Ok(w, handler.movieService.findAll())
+func (this *handler) getMovies(w http.ResponseWriter, r *http.Request) {
+	web.Ok(w, this.movieService.findAll())
 }
 
-func (handler *handler) getById(w http.ResponseWriter, r *http.Request) {
+func (this *handler) getById(w http.ResponseWriter, r *http.Request) {
 	id, err := convertion.StringToInt(web.GetPathVariable(r, "id"))
 
 	if err != nil {
@@ -28,7 +28,7 @@ func (handler *handler) getById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	movie, err := handler.movieService.getById(id)
+	movie, err := this.movieService.getById(id)
 
 	if err != nil {
 		web.Confict(w, err.Error())
@@ -39,13 +39,13 @@ func (handler *handler) getById(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (handler *handler) saveMovie(w http.ResponseWriter, r *http.Request) {
+func (this *handler) saveMovie(w http.ResponseWriter, r *http.Request) {
 	movie := &movie{}
 	if err := web.ReadBody(r.Body, movie); err != nil {
 		web.InternalServerError(w, err.Error())
 		return
 	}
-	_ = handler.movieService.save(movie)
+	_ = this.movieService.save(movie)
 	web.Ok(w, nil)
 }
 
@@ -67,8 +67,8 @@ func (this *handler) GetRoutes() []routing.ApiRoute {
 			Endpoint: "/",
 		},
 		{
-			Handler: this.getMovies,
-			Method:  routing.GET,
+			Handler:  this.getMovies,
+			Method:   routing.GET,
 			Endpoint: "/",
 		},
 		{

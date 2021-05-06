@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	loginControllerInstance *handler
+	loginHandlerInstance *handler
 )
 
 type handler struct {
@@ -17,12 +17,12 @@ type handler struct {
 }
 
 func GetLoginHandlerInstance() routing.ApiHandler {
-	if loginControllerInstance == nil {
-		loginControllerInstance = &handler{
+	if loginHandlerInstance == nil {
+		loginHandlerInstance = &handler{
 			jwtProvider: security.GetJwtProviderInstance(),
 		}
 	}
-	return loginControllerInstance
+	return loginHandlerInstance
 }
 
 //Creates a fake jwt with 5 mins expiration
@@ -41,12 +41,12 @@ func (this *handler) GetMiddlewares() routing.Middlewares {
 	return routing.Middlewares{}
 }
 
-func (controller *handler) GetRoutes() []routing.ApiRoute {
+func (this *handler) GetRoutes() []routing.ApiRoute {
 	return []routing.ApiRoute{
 		{
 			Endpoint: "/token",
-			Method:  "GET",
-			Handler: controller.generateFakeToken,
+			Method:   "GET",
+			Handler:  this.generateFakeToken,
 		},
 	}
 }
