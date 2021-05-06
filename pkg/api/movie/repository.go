@@ -12,6 +12,8 @@ type repository interface {
 
 var (
 	repositoryInstance repository
+	unexistentMovie = errors.New("unexistent.movie")
+	existentMovie = errors.New("existent.movie")
 )
 
 type repositoryImpl struct {
@@ -20,7 +22,7 @@ type repositoryImpl struct {
 
 func (repository *repositoryImpl) save(movie *movie) error {
 	if _, exist := repository.movies[(*movie).Id]; exist {
-		return errors.New("Ya existe la pelicula")
+		return existentMovie
 	}
 	repository.movies[movie.Id] = *movie
 	return nil
@@ -31,7 +33,7 @@ func (repository *repositoryImpl) getById(id int) (*movie, error) {
 	if exist {
 		return &movie, nil
 	}
-	return nil, errors.New("No existe la pelicula")
+	return nil, unexistentMovie
 }
 
 func (repository *repositoryImpl) findAll() []movie {

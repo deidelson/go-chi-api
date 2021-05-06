@@ -3,6 +3,7 @@ package web
 import (
 	"encoding/json"
 	"errors"
+	"github.com/go-chi/chi/v5"
 	"io"
 	"net/http"
 )
@@ -13,6 +14,10 @@ func ReadBody(body io.Reader, object interface{}) error {
 		return errors.New("json.bad.format")
 	}
 	return nil
+}
+
+func GetPathVariable( r *http.Request, key string) string {
+	return chi.URLParam(r, key)
 }
 
 func Ok(w http.ResponseWriter, body interface{}) {

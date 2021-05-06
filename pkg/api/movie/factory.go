@@ -2,7 +2,7 @@ package movie
 
 import "github.com/deidelson/go-chi-api/pkg/core/routing"
 
-func GetMovieControllerInstance() routing.ApiHandler {
+func GetMovieHandlerInstance() routing.ApiHandler {
 	if handlerInstance == nil {
 		handlerInstance = &handler{
 			movieService: getMovieServiceInstance(getMovieRepositoryInstance()),

@@ -3,8 +3,8 @@ package movie
 import (
 	"github.com/deidelson/go-chi-api/pkg/core/convertion"
 	"github.com/deidelson/go-chi-api/pkg/core/routing"
+	"github.com/deidelson/go-chi-api/pkg/core/routing/middleware"
 	"github.com/deidelson/go-chi-api/pkg/core/web"
-	"github.com/go-chi/chi/v5"
 	"net/http"
 )
 
@@ -21,8 +21,7 @@ func (handler *handler) getMovies(w http.ResponseWriter, r *http.Request) {
 }
 
 func (handler *handler) getById(w http.ResponseWriter, r *http.Request) {
-	//TODO move chi.URLParam to utility for technology abstraction
-	id, err := convertion.StringToInt(chi.URLParam(r, "id"))
+	id, err := convertion.StringToInt(web.GetPathVariable(r, "id"))
 
 	if err != nil {
 		web.InternalServerError(w, err.Error())
@@ -55,7 +54,9 @@ func (this *handler) GetBasePath() string {
 }
 
 func (this *handler) GetMiddlewares() routing.Middlewares {
-	return routing.Middlewares{}
+	return routing.Middlewares{
+		middleware.Jwt,
+	}
 }
 
 func (this *handler) GetRoutes() []routing.ApiRoute {
