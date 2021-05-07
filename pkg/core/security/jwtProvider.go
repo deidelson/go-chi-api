@@ -3,6 +3,7 @@ package security
 import (
 	"fmt"
 	"github.com/deidelson/go-chi-api/pkg/core/date"
+	"github.com/deidelson/go-chi-api/pkg/core/env"
 	"github.com/dgrijalva/jwt-go"
 )
 
@@ -23,7 +24,7 @@ var (
 func GetJwtProviderInstance() JwtProvider {
 	if jwtProviderInstance == nil {
 		jwtProviderInstance = &JwtProviderImpl{
-			secret:                 []byte("secret-local"),
+			secret:                 []byte(env.GetEnvOrDefault(tokenSecretKey, "secret-local")),
 			expirationTimeinMinuts: 60,
 		}
 	}
@@ -32,7 +33,7 @@ func GetJwtProviderInstance() JwtProvider {
 
 func (jwtProvider *JwtProviderImpl) CreateToken(claims jwt.MapClaims) (string, error) {
 	expiration := date.Now()
-	expiration = date.AddMinuts(expiration, 60)
+	expiration = date.AddMinuts(expiration, env.GetEnvOrDefaultAsInt(tokenExpirationKey, 60))
 
 	claims["exp"] = date.TimeToString(expiration)
 
