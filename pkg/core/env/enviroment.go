@@ -17,7 +17,7 @@ func GetEnvOrDefaultAsInt(key string, defaultValue int) int {
 	if value, ok := os.LookupEnv(key); ok {
 		parsedValue, err := convertion.StringToInt(value)
 		if err != nil {
-			panic("Cannot load env variable")
+			panic("Cannot load env variable: " + key)
 		}
 		return parsedValue
 	}
