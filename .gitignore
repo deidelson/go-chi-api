@@ -24,3 +24,5 @@ golang-api
 *.iml
 *.ipr
 /vendor/
+
+swagger\.json

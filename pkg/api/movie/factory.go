@@ -23,9 +23,9 @@ func getMovieServiceInstance(movieRepository repository) service {
 func getMovieRepositoryInstance() repository {
 	if repositoryInstance == nil {
 		repositoryInstance = &repositoryImpl{
-			movies: make(map[int]movie),
+			movies: make(map[int]Movie),
 		}
-		repositoryInstance.save(&movie{
+		repositoryInstance.save(&Movie{
 			Id:       0,
 			Name:     "Django",
 			Director: "Tarantino",

@@ -5,9 +5,9 @@ import (
 )
 
 type repository interface {
-	save(movie *movie) error
-	getById(id int) (*movie, error)
-	findAll() []movie
+	save(movie *Movie) error
+	getById(id int) (*Movie, error)
+	findAll() []Movie
 }
 
 var (
@@ -17,10 +17,10 @@ var (
 )
 
 type repositoryImpl struct {
-	movies map[int]movie
+	movies map[int]Movie
 }
 
-func (repository *repositoryImpl) save(movie *movie) error {
+func (repository *repositoryImpl) save(movie *Movie) error {
 	if _, exist := repository.movies[(*movie).Id]; exist {
 		return existentMovie
 	}
@@ -28,7 +28,7 @@ func (repository *repositoryImpl) save(movie *movie) error {
 	return nil
 }
 
-func (repository *repositoryImpl) getById(id int) (*movie, error) {
+func (repository *repositoryImpl) getById(id int) (*Movie, error) {
 	movie, exist := repository.movies[id]
 	if exist {
 		return &movie, nil
@@ -36,8 +36,8 @@ func (repository *repositoryImpl) getById(id int) (*movie, error) {
 	return nil, unexistentMovie
 }
 
-func (repository *repositoryImpl) findAll() []movie {
-	movies := make([]movie, 0, 0)
+func (repository *repositoryImpl) findAll() []Movie {
+	movies := make([]Movie, 0, 0)
 	for _, value := range repository.movies {
 		movies = append(movies, value)
 	}

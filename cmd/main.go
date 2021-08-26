@@ -1,3 +1,24 @@
+// Go chi api
+//
+// Go chi example api
+//
+//     Schemes: http, https
+//     Host: localhost
+//     BasePath:
+//     Version: 0.0.1
+//     License: MIT http://opensource.org/licenses/MIT
+//     Contact:
+//
+//     Security:
+//     - jwt:
+//
+//     SecurityDefinitions:
+//     jwt:
+//          type: apiKey
+//          name: authorization
+//          in: header
+//
+// swagger:meta
 package main
 
 import (

@@ -1,9 +1,9 @@
 package movie
 
 type service interface {
-	save(movie *movie) error
-	getById(id int) (*movie, error)
-	findAll() []movie
+	save(movie *Movie) error
+	getById(id int) (*Movie, error)
+	findAll() []Movie
 }
 
 var (
@@ -14,14 +14,14 @@ type serviceImpl struct {
 	movieRepository repository
 }
 
-func (service *serviceImpl) save(movie *movie) error {
+func (service *serviceImpl) save(movie *Movie) error {
 	return service.movieRepository.save(movie)
 }
 
-func (service *serviceImpl) getById(id int) (*movie, error) {
+func (service *serviceImpl) getById(id int) (*Movie, error) {
 	return service.movieRepository.getById(id)
 }
 
-func (service *serviceImpl) findAll() []movie {
+func (service *serviceImpl) findAll() []Movie {
 	return service.movieRepository.findAll()
 }
